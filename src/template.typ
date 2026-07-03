@@ -1,3 +1,5 @@
+#import "conf.typ": *
+
 // Helper for metadata layout (Split Left/Right)
 #let _meta_grid(left, right) = {
   grid(
@@ -15,20 +17,20 @@
   
   align(center)[
     #text(size: 18pt, weight: "bold")[#author] \
-    #contact.join("  |  ")
+    #v(1pt)
+    #contact.join(" | ")
   ]
   body
 }
 
 // SECTION
 #let section(title) = {
-  v(8pt) // Space before the section header
+  v(8pt)
   block(width: 100%)[
     #text(size: 11pt, weight: "bold")[#upper(title)]
-    #v(-6pt) // This pulls the line UP right beneath the text baseline
+    #v(-6pt)
     #line(length: 100%, stroke: 0.5pt)
   ]
-  v(4pt) // Space before your content starts
 }
 
 // JOBS & EXPERIENCE
@@ -40,10 +42,15 @@
   description: []
 ) = {
   block(width: 100%, breakable: false)[
-    #_meta_grid(text(weight: "bold")[#title], text(style: "italic", fill: rgb("#718096"))[#date])
-    #v(-2pt)
-    #_meta_grid(text(style: "italic", fill: rgb("#4a5568"))[#company], text(fill: rgb("#718096"))[#location])
-    #v(2pt)
+    #_meta_grid(
+      text(weight: "bold")[#title], 
+      text(size: meta-size)[#date]
+    )
+    #v(-4pt)
+    #_meta_grid(
+      text(size: meta-size)[#company], 
+      text(size: meta-size)[#location]
+    )
     #description
   ]
 }
@@ -51,17 +58,13 @@
 // PROJECT
 #let projectsEntry(
   title: "",
-  techStack: "",
   date: "",
   description: []
 ) = {
   block(width: 100%, breakable: false)[
     #_meta_grid(
-      [
-        #text(weight: "bold")[#title]
-        #if techStack != "" [ | _#text(fill: rgb("#4a5568"))[#techStack]_ ]
-      ],
-      text(style: "italic", fill: rgb("#718096"))[#date]
+      text(weight: "bold")[#title],
+      text(size: meta-size)[#date]
     )
     #v(2pt)
     #description
@@ -89,9 +92,9 @@
     #_meta_grid(
       [
         #text(weight: "bold")[#name]
-        #if issuer != "" [ | _#text(fill: rgb("#4a5568"))[#issuer]_ ]
+        #if issuer != "" [ | #issuer ]
       ],
-      text(style: "italic", fill: rgb("#718096"))[#date]
+      text(size: meta-size)[#date]
     )
     #v(2pt)
   ]

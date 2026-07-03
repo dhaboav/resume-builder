@@ -44,13 +44,13 @@ Fill in `src/data.typ` with your personal information.
 Watch for changes while editing:
 
 ```bash
-typst watch src/resume.typ output/[ResumeNameFormat].pdf
+typst watch main.typ output/resume.pdf
 ```
 
 Or compile once:
 
 ```bash
-typst compile src/resume.typ output/[ResumeNameFormat].pdf
+typst compile main.typ output/resume.pdf
 ```
 
 ## 🛠 Customization

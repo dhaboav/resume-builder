@@ -22,7 +22,6 @@
 #for project in data.projects {
   projectsEntry(
     title: project.title,
-    techStack: project.techStack,
     date: project.date,
     description: render_bullets(project.bullets)
   )
@@ -45,8 +44,8 @@
 #entry(
   title: data.education.title,
   company: data.education.company,
-  location: data.education.location,
   date: data.education.date,
+  location: data.education.location,
   description: render_bullets(data.education.bullets)
 )
 
