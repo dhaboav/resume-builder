@@ -1,15 +1,15 @@
 import { Button } from '@/shared/components/ui/button';
 import { Eye, Pencil, type LucideIcon } from 'lucide-react';
 import React from 'react';
-import type { TabMode } from '../hooks/useViewPanel';
+import type { WorkspaceTab } from '../hooks/useViewPanel';
 
-interface MobileNavProps {
-  activeTab: TabMode;
-  onTabChange: (tab: TabMode) => void;
+interface MobileToggleProps {
+  activeTab: WorkspaceTab;
+  onTabChange: (tab: WorkspaceTab) => void;
 }
 
 interface NavItem {
-  id: TabMode;
+  id: WorkspaceTab;
   label: string;
   Icon: LucideIcon;
 }
@@ -24,7 +24,7 @@ const BUTTON_VARIANTS = {
   inactive: 'bg-transparent text-slate-600',
 };
 
-export const MobileNav: React.FC<MobileNavProps> = ({ activeTab, onTabChange }) => {
+export const MobileToggle: React.FC<MobileToggleProps> = ({ activeTab, onTabChange }) => {
   return (
     <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border border-slate-200 bg-white/95 p-2 shadow-xl lg:hidden">
       <div className="flex items-center justify-center gap-1">
