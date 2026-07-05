@@ -30,6 +30,10 @@ export function useResumeState() {
     }
   });
 
+  const setFullState = (newState: ResumeState) => {
+    setState(newState);
+  };
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
@@ -117,6 +121,7 @@ export function useResumeState() {
 
   return {
     state,
+    setFullState,
     changeTemplate,
     patchSection,
     addSection,
