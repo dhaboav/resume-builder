@@ -9,7 +9,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="flex h-16 w-full items-center justify-between bg-white px-6 text-black">
+    <nav className="flex h-16 w-full items-center justify-between border-b border-slate-300 bg-white px-6 text-black">
       <div className="flex items-center gap-2">
         <Hexagon className="h-5 w-5 fill-black" />
         <span className="font-semibold tracking-tight">Resume Builder</span>

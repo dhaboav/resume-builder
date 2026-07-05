@@ -1,9 +1,11 @@
+import { ViewPanel } from '@/resume-builder/ViewPanel';
 import { Navbar } from '@/shared/components/Navbar';
 
 function App() {
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-900">
+    <div className="flex h-screen w-screen flex-col overflow-hidden">
       <Navbar />
+      <ViewPanel />
     </div>
   );
 }
