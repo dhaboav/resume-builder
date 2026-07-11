@@ -1,4 +1,3 @@
-// src/features/resume-form-engine/model/use-resume-io.ts
 import type { ResumeState } from './resume';
 
 /**
