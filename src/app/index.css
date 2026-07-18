@@ -130,3 +130,27 @@
     @apply font-sans;
   }
 }
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /* Sembunyikan semua elemen default root web */
+  html,
+  body,
+  #root,
+  #__next {
+    background: #ffffff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Pastikan elemen yang kita tandai print:block melebar penuh */
+  .print\:block {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}

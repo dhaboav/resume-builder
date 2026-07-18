@@ -5,7 +5,8 @@ import type { ResumeState } from './resume';
  * Single Responsibility: Handling browser file distribution.
  */
 export function exportStateToJson(state: ResumeState, filename = 'resume-data.json') {
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
+  const dataStr =
+    'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
   const downloadAnchor = document.createElement('a');
   downloadAnchor.setAttribute('href', dataStr);
   downloadAnchor.setAttribute('download', filename);
