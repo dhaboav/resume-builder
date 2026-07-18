@@ -1,5 +1,4 @@
 export type LayoutStyle = 'timeline' | 'grid' | 'plain' | 'contact-block';
-export type TemplateStyle = 'ats' | 'creative';
 
 export interface Entry {
   id: string;
@@ -19,6 +18,6 @@ export interface Section {
 }
 
 export interface ResumeState {
-  template: TemplateStyle;
+  template: string;
   sections: Section[];
 }

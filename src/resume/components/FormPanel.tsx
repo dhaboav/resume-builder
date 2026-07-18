@@ -1,6 +1,8 @@
 import type { ResumeState } from '@/shared/lib/resume';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
+import { RESUME_TEMPLATES } from '../templates/registry';
 import { AddSectionDialog } from './AddSectionDialog';
 import { SectionCard } from './SectionCard';
 
@@ -11,12 +13,26 @@ interface FormPanelProps {
 
 export const FormPanel: React.FC<FormPanelProps> = ({ state, actions }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-
   return (
     <div className="flex h-full flex-col p-6">
-      <header className="mb-1">
-        <h1 className="text-xl font-bold tracking-tight">Builder</h1>
-        <p className="mt-1 text-xs text-slate-400">Edits save automatically.</p>
+      <header className="mb-4 flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">Builder</h1>
+          <p className="mt-1 text-xs text-slate-400">Edits save automatically.</p>
+        </div>
+
+        <Select value={state.template} onValueChange={(value) => actions.changeTemplate(value)}>
+          <SelectTrigger className="w-40">
+            <SelectValue placeholder="Select Template" />
+          </SelectTrigger>
+          <SelectContent alignItemWithTrigger={false}>
+            {RESUME_TEMPLATES.map((template) => (
+              <SelectItem key={template.id} value={template.id}>
+                {template.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </header>
 
       {state.sections.map((sec, i) => (
