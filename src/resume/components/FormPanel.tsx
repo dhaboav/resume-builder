@@ -1,4 +1,4 @@
-import type { ResumeState } from '@/shared/lib/resume';
+import { useResumeStore } from '@/resume/hooks/useResumeState'; // 💡 Sesuaikan dengan path store Anda
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
@@ -6,13 +6,23 @@ import { RESUME_TEMPLATES } from '../templates/registry';
 import { AddSectionDialog } from './AddSectionDialog';
 import { SectionCard } from './SectionCard';
 
-interface FormPanelProps {
-  state: ResumeState;
-  actions: any;
-}
-
-export const FormPanel: React.FC<FormPanelProps> = ({ state, actions }) => {
+export const FormPanel: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  // 💡 1. Ambil data state secara terpisah/spesifik agar re-render lebih efisien
+  const template = useResumeStore((store) => store.state.template);
+  const sections = useResumeStore((store) => store.state.sections);
+
+  // 💡 2. Ambil seluruh actions yang dibutuhkan dari store
+  const changeTemplate = useResumeStore((store) => store.changeTemplate);
+  const patchSection = useResumeStore((store) => store.patchSection);
+  const addSection = useResumeStore((store) => store.addSection);
+  const deleteSection = useResumeStore((store) => store.deleteSection);
+  const moveSection = useResumeStore((store) => store.moveSection);
+  const patchEntry = useResumeStore((store) => store.patchEntry);
+  const addEntry = useResumeStore((store) => store.addEntry);
+  const removeEntry = useResumeStore((store) => store.removeEntry);
+
   return (
     <div className="flex h-full flex-col p-6">
       <header className="mb-4 flex items-center justify-between">
@@ -21,36 +31,51 @@ export const FormPanel: React.FC<FormPanelProps> = ({ state, actions }) => {
           <p className="mt-1 text-xs text-slate-400">Edits save automatically.</p>
         </div>
 
-        <Select value={state.template} onValueChange={(value) => actions.changeTemplate(value)}>
+        {/* Pemilihan Template */}
+        <Select
+          value={template}
+          onValueChange={(value) => {
+            // 💡 Cegah nilai null masuk ke Zustand store
+            if (value !== null) {
+              changeTemplate(value);
+            }
+            // Opsi alternatif jika ingin ada fallback string kosong:
+            // changeTemplate(value ?? '');
+          }}
+        >
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Select Template" />
           </SelectTrigger>
           <SelectContent alignItemWithTrigger={false}>
-            {RESUME_TEMPLATES.map((template) => (
-              <SelectItem key={template.id} value={template.id}>
-                {template.name}
+            {RESUME_TEMPLATES.map((t) => (
+              <SelectItem key={t.id} value={t.id}>
+                {t.name}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </header>
 
-      {state.sections.map((sec, i) => (
-        <SectionCard
-          key={sec.id}
-          section={sec}
-          canUp={i > 0}
-          canDown={i < state.sections.length - 1}
-          onMove={(d) => actions.moveSection(sec.id, d)}
-          onDelete={() => actions.deleteSection(sec.id)}
-          onToggle={() => actions.patchSection(sec.id, { collapsed: !sec.collapsed })}
-          onTitle={(t) => actions.patchSection(sec.id, { title: t })}
-          onPatchEntry={(eid, p) => actions.patchEntry(sec.id, eid, p)}
-          onAddEntry={() => actions.addEntry(sec.id)}
-          onRemoveEntry={(eid) => actions.removeEntry(sec.id, eid)}
-        />
-      ))}
+      {/* List / Loop Section List */}
+      <div className="mb-4 space-y-4">
+        {sections.map((sec, i) => (
+          <SectionCard
+            key={sec.id}
+            section={sec}
+            canUp={i > 0}
+            canDown={i < sections.length - 1}
+            onMove={(direction) => moveSection(sec.id, direction)}
+            onDelete={() => deleteSection(sec.id)}
+            onToggle={() => patchSection(sec.id, { collapsed: !sec.collapsed })}
+            onTitle={(title) => patchSection(sec.id, { title })}
+            onPatchEntry={(entryId, patch) => patchEntry(sec.id, entryId, patch)}
+            onAddEntry={() => addEntry(sec.id)}
+            onRemoveEntry={(entryId) => removeEntry(sec.id, entryId)}
+          />
+        ))}
+      </div>
 
+      {/* Tombol Add New Section */}
       <button
         onClick={() => setDialogOpen(true)}
         className="hover:border-brand hover:text-brand hover:bg-brand/5 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-4 text-sm font-medium text-muted-foreground transition"
@@ -58,7 +83,8 @@ export const FormPanel: React.FC<FormPanelProps> = ({ state, actions }) => {
         <Plus className="h-4 w-4" /> Add New Section
       </button>
 
-      <AddSectionDialog open={dialogOpen} onOpenChange={setDialogOpen} onAdd={actions.addSection} />
+      {/* Dialog untuk Tambah Section */}
+      <AddSectionDialog open={dialogOpen} onOpenChange={setDialogOpen} onAdd={addSection} />
     </div>
   );
 };
