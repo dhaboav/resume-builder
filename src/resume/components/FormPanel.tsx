@@ -1,8 +1,8 @@
-import { AddSectionDialog } from '@/features/resume-form-engine/ui/AddSectionDialog';
-import { SectionCard } from '@/features/resume-form-engine/ui/SectionCard';
 import type { ResumeState } from '@/shared/lib/resume';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
+import { AddSectionDialog } from './AddSectionDialog';
+import { SectionCard } from './SectionCard';
 
 interface FormPanelProps {
   state: ResumeState;

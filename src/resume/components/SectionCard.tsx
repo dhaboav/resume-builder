@@ -1,5 +1,5 @@
-import { Card } from '@/shared/components/ui/card';
 import type { Entry, Section } from '@/shared/lib/resume';
+import { Card } from '@/shared/ui';
 import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
 import React from 'react';
 import { EntryEditor } from './EntryEditor';

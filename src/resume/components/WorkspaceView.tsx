@@ -1,7 +1,7 @@
-import { useResumeState } from '@/features/resume-form-engine/hooks/useResumeState';
+import { useResumeState } from '@/resume/hooks/useResumeState';
+import { useViewPanel } from '@/resume/hooks/useViewPanel';
 import { Navbar } from '@/shared/components/Navbar';
 import { exportStateToJson, importStateFromJson } from '@/shared/lib/json';
-import { useViewPanel } from '../hooks/useViewPanel';
 import { FormPanel } from './FormPanel';
 import { MobileToggle } from './MobileToggle';
 import { PreviewPanel } from './PreviewPanel';

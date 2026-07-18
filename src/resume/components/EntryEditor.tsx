@@ -1,10 +1,8 @@
-import { Input } from '@/shared/components/ui/input';
-import { Label } from '@/shared/components/ui/label';
-import { Textarea } from '@/shared/components/ui/textarea';
+import { getLabelsByLayout } from '@/resume/hooks/useEntryLabels';
 import type { Entry, LayoutStyle } from '@/shared/lib/resume';
+import { Input, Label, Textarea } from '@/shared/ui';
 import { X } from 'lucide-react';
 import React from 'react';
-import { getLabelsByLayout } from '../hooks/useEntryLabels';
 
 interface EntryEditorProps {
   layout: LayoutStyle;

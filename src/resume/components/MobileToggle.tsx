@@ -1,7 +1,7 @@
-import { Button } from '@/shared/components/ui/button';
+import type { WorkspaceTab } from '@/resume/hooks/useViewPanel';
+import { Button } from '@/shared/ui';
 import { Eye, Pencil, type LucideIcon } from 'lucide-react';
 import React from 'react';
-import type { WorkspaceTab } from '../hooks/useViewPanel';
 
 interface MobileToggleProps {
   activeTab: WorkspaceTab;

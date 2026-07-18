@@ -1,4 +1,4 @@
-import { WorkspaceView } from '@/widgets/resume-workspace/ui/WorkspaceView';
+import { WorkspaceView } from '@/resume/components/WorkspaceView';
 
 function App() {
   return (

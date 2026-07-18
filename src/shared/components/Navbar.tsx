@@ -1,7 +1,7 @@
 // src/shared/components/navbar.tsx
 import { Download, FileBraces, Hexagon, Upload } from 'lucide-react';
 import React, { useRef } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 interface NavbarProps {
   onExportJSON: () => void;
