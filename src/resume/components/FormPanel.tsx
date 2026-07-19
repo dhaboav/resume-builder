@@ -39,7 +39,7 @@ export function FormPanel() {
         </Select>
       </header>
 
-      <div className="mb-4 flex-1 space-y-4 overflow-y-auto pr-1">
+      <div className="mb-4 space-y-4 overflow-y-auto">
         {sections.map((sec, i) => (
           <SectionCard
             key={sec.id}
@@ -62,7 +62,7 @@ export function FormPanel() {
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
-        className="hover:border-brand hover:text-brand hover:bg-brand/5 flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-4 text-sm font-medium text-muted-foreground transition"
+        className="hover:border-brand hover:text-brand hover:bg-brand/5 mb-18 flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-4 text-sm font-medium text-muted-foreground transition lg:mb-0"
       >
         <Plus className="h-4 w-4" /> Add New Section
       </button>

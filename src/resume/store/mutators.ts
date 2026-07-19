@@ -10,8 +10,7 @@ export const resumeMutators = {
     if (secId === 'contact') return sections;
     const index = sections.findIndex((sec) => sec.id === secId);
     const target = index + direction;
-    if (index <= 1 || target < 1 || target >= sections.length) return sections;
-
+    if (index < 1 || target < 1 || target >= sections.length) return sections;
     const result = [...sections];
     [result[index], result[target]] = [result[target], result[index]];
     return result;
