@@ -5,15 +5,16 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  Field,
+  FieldLabel,
   Input,
-  Label,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface AddSectionDialogProps {
   open: boolean;
@@ -21,19 +22,13 @@ interface AddSectionDialogProps {
   onAdd: (title: string, layout: LayoutStyle) => void;
 }
 
-export const AddSectionDialog: React.FC<AddSectionDialogProps> = ({
-  open,
-  onOpenChange,
-  onAdd,
-}) => {
+export function AddSectionDialog({ open, onOpenChange, onAdd }: AddSectionDialogProps) {
   const [title, setTitle] = useState('');
   const [layout, setLayout] = useState<LayoutStyle>('timeline');
 
   const handleAdd = () => {
     if (!title.trim()) return;
-
     onAdd(title.trim(), layout);
-
     setTitle('');
     setLayout('timeline');
     onOpenChange(false);
@@ -47,7 +42,8 @@ export const AddSectionDialog: React.FC<AddSectionDialogProps> = ({
         </DialogHeader>
 
         <div className="space-y-4 py-2">
-          <Field label="Title">
+          <Field>
+            <FieldLabel>Title</FieldLabel>
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -55,7 +51,8 @@ export const AddSectionDialog: React.FC<AddSectionDialogProps> = ({
             />
           </Field>
 
-          <Field label="Layout Style">
+          <Field>
+            <FieldLabel>Layout Style</FieldLabel>
             <Select value={layout} onValueChange={(v) => setLayout(v as LayoutStyle)}>
               <SelectTrigger className="w-full">
                 <SelectValue />
@@ -75,23 +72,11 @@ export const AddSectionDialog: React.FC<AddSectionDialogProps> = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button variant="default" size="lg" onClick={handleAdd}>
+          <Button variant="default" onClick={handleAdd}>
             Add
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
-
-/* Internal Form Helper */
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="space-y-1.5">
-      <Label className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-        {label}
-      </Label>
-      {children}
-    </div>
   );
 }

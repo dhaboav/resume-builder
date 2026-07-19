@@ -1,5 +1,5 @@
+import { Navbar } from '@/navbar/Navbar';
 import { WorkspaceView } from '@/resume/WorkspaceView';
-import { Navbar } from '@/shared/components/Navbar';
 
 function App() {
   return (

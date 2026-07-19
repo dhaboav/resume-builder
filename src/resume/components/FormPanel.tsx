@@ -1,27 +1,14 @@
-import { useResumeStore } from '@/resume/hooks/useResumeState';
+import { useResumeStore } from '@/resume/store';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { templateStyleRegistry } from '@/templates/registry';
 import { Plus } from 'lucide-react';
-import React, { useState } from 'react';
-import { AddSectionDialog } from './section/AddSectionDialog';
-import { SectionCard } from './section/SectionCard';
+import { useState } from 'react';
+import { AddSectionDialog, SectionCard } from './section';
 
-export const FormPanel: React.FC = () => {
+export function FormPanel() {
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  // 💡 1. Ambil data state secara terpisah/spesifik agar re-render lebih efisien
-  const template = useResumeStore((store) => store.state.template);
-  const sections = useResumeStore((store) => store.state.sections);
-
-  // 💡 2. Ambil seluruh actions yang dibutuhkan dari store
-  const changeTemplate = useResumeStore((store) => store.changeTemplate);
-  const patchSection = useResumeStore((store) => store.patchSection);
-  const addSection = useResumeStore((store) => store.addSection);
-  const deleteSection = useResumeStore((store) => store.deleteSection);
-  const moveSection = useResumeStore((store) => store.moveSection);
-  const patchEntry = useResumeStore((store) => store.patchEntry);
-  const addEntry = useResumeStore((store) => store.addEntry);
-  const removeEntry = useResumeStore((store) => store.removeEntry);
+  const { state, actions } = useResumeStore();
+  const { template, sections } = state;
 
   return (
     <div className="flex h-full flex-col p-6">
@@ -31,16 +18,12 @@ export const FormPanel: React.FC = () => {
           <p className="mt-1 text-xs text-slate-400">Edits save automatically.</p>
         </div>
 
-        {/* Pemilihan Template */}
         <Select
           value={template}
           onValueChange={(value) => {
-            // 💡 Cegah nilai null masuk ke Zustand store
             if (value !== null) {
-              changeTemplate(value);
+              actions.document.changeTemplate(value);
             }
-            // Opsi alternatif jika ingin ada fallback string kosong:
-            // changeTemplate(value ?? '');
           }}
         >
           <SelectTrigger className="w-40">
@@ -56,35 +39,39 @@ export const FormPanel: React.FC = () => {
         </Select>
       </header>
 
-      {/* List / Loop Section List */}
-      <div className="mb-4 space-y-4">
+      <div className="mb-4 flex-1 space-y-4 overflow-y-auto pr-1">
         {sections.map((sec, i) => (
           <SectionCard
             key={sec.id}
             section={sec}
-            canUp={i > 0}
+            canUp={i > 1}
             canDown={i < sections.length - 1}
-            onMove={(direction) => moveSection(sec.id, direction)}
-            onDelete={() => deleteSection(sec.id)}
-            onToggle={() => patchSection(sec.id, { collapsed: !sec.collapsed })}
-            onTitle={(title) => patchSection(sec.id, { title })}
-            onPatchEntry={(entryId, patch) => patchEntry(sec.id, entryId, patch)}
-            onAddEntry={() => addEntry(sec.id)}
-            onRemoveEntry={(entryId) => removeEntry(sec.id, entryId)}
+            actions={{
+              onMove: (dir) => actions.sections.move(sec.id, dir),
+              onDelete: () => actions.sections.delete(sec.id),
+              onToggle: () => actions.sections.patch(sec.id, { collapsed: !sec.collapsed }),
+              onTitle: (title) => actions.sections.patch(sec.id, { title }),
+              onPatchEntry: (eid, p) => actions.entries.patch(sec.id, eid, p),
+              onAddEntry: () => actions.entries.add(sec.id),
+              onRemoveEntry: (eid) => actions.entries.remove(sec.id, eid),
+            }}
           />
         ))}
       </div>
 
-      {/* Tombol Add New Section */}
       <button
+        type="button"
         onClick={() => setDialogOpen(true)}
-        className="hover:border-brand hover:text-brand hover:bg-brand/5 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-4 text-sm font-medium text-muted-foreground transition"
+        className="hover:border-brand hover:text-brand hover:bg-brand/5 flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border py-4 text-sm font-medium text-muted-foreground transition"
       >
         <Plus className="h-4 w-4" /> Add New Section
       </button>
 
-      {/* Dialog untuk Tambah Section */}
-      <AddSectionDialog open={dialogOpen} onOpenChange={setDialogOpen} onAdd={addSection} />
+      <AddSectionDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onAdd={actions.sections.add}
+      />
     </div>
   );
-};
+}
