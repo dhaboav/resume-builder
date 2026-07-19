@@ -1,10 +1,10 @@
-import { useResumeStore } from '@/resume/hooks/useResumeState'; // 💡 Sesuaikan dengan path store Anda
+import { useResumeStore } from '@/resume/hooks/useResumeState';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
 import { RESUME_TEMPLATES } from '../templates/registry';
-import { AddSectionDialog } from './AddSectionDialog';
-import { SectionCard } from './SectionCard';
+import { AddSectionDialog } from './section/AddSectionDialog';
+import { SectionCard } from './section/SectionCard';
 
 export const FormPanel: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);

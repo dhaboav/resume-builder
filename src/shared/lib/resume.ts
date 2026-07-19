@@ -1,11 +1,14 @@
-export type LayoutStyle = 'timeline' | 'grid' | 'plain' | 'contact-block';
+export type LayoutStyle = 'contact' | 'timeline' | 'grid' | 'plain';
 
-export interface Entry {
+export interface EntryLabels {
+  title: string;
+  subtitle: string;
+  date: string;
+  description: string;
+}
+
+export interface Entry extends Partial<EntryLabels> {
   id: string;
-  title?: string;
-  subtitle?: string;
-  date?: string;
-  description?: string;
 }
 
 export interface Section {

@@ -1,33 +1,7 @@
 import { exportStateToJson, importStateFromJson } from '@/shared/lib/json';
+import type { Entry, LayoutStyle, ResumeState, Section } from '@/shared/lib/resume';
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-
-// ========================================================
-// Type Definitions
-// ========================================================
-export type LayoutStyle = 'timeline' | 'grid' | 'plain' | 'contact-block';
-
-export interface Entry {
-  id: string;
-  title?: string;
-  subtitle?: string;
-  date?: string;
-  description?: string;
-}
-
-export interface Section {
-  id: string;
-  title: string;
-  layoutStyle: LayoutStyle;
-  collapsed: boolean;
-  isRequired: boolean;
-  entries: Entry[];
-}
-
-export interface ResumeState {
-  template: string; // 💡 Sudah disesuaikan menjadi string murni
-  sections: Section[];
-}
 
 interface ResumeActions {
   setFullState: (newState: ResumeState) => void;
@@ -59,7 +33,7 @@ const getInitialState = (): ResumeState => ({
     {
       id: 'contact',
       title: 'Contact Information',
-      layoutStyle: 'contact-block',
+      layoutStyle: 'contact',
       collapsed: false,
       isRequired: true,
       entries: [{ id: uid() }],

@@ -31,7 +31,7 @@ export const PreviewPanel: React.FC = () => {
             >
               <h2
                 className={`${theme.sectionTitleClass || ''} ${
-                  section.layoutStyle === 'contact-block' ? 'sr-only' : ''
+                  section.layoutStyle === 'contact' ? 'sr-only' : ''
                 }`}
               >
                 {section.title}
@@ -43,7 +43,7 @@ export const PreviewPanel: React.FC = () => {
                     key={entry.id}
                     className={`${layoutTheme.entryClass || ''} print:break-inside-avoid`}
                   >
-                    {section.layoutStyle === 'contact-block' ? (
+                    {section.layoutStyle === 'contact' ? (
                       <>
                         {entry.title && <div className={layoutTheme.titleClass}>{entry.title}</div>}
                         {entry.subtitle && (

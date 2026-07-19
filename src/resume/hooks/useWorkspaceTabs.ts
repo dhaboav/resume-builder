@@ -1,16 +1,12 @@
 import { useState } from 'react';
 
 export type WorkspaceTab = 'edit' | 'preview';
-
-export function useViewPanel() {
+export const useWorkspaceTabs = () => {
   const [activeTab, setActiveTab] = useState<WorkspaceTab>('edit');
 
-  const toggleMobileView = (tab: WorkspaceTab) => {
+  const changeTab = (tab: WorkspaceTab) => {
     setActiveTab(tab);
   };
 
-  return {
-    activeTab,
-    toggleMobileView,
-  };
-}
+  return { activeTab, changeTab };
+};

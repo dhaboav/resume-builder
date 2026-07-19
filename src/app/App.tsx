@@ -1,4 +1,4 @@
-import { WorkspaceView } from '@/resume/components/WorkspaceView';
+import { WorkspaceView } from '@/resume/WorkspaceView';
 import { Navbar } from '@/shared/components/Navbar';
 
 function App() {

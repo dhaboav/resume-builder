@@ -2,7 +2,7 @@ import type { Entry, Section } from '@/shared/lib/resume';
 import { Card } from '@/shared/ui';
 import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
 import React from 'react';
-import { EntryEditor } from './EntryEditor';
+import { SectionEntry } from './SectionEntry';
 
 interface SectionCardProps {
   section: Section;
@@ -93,7 +93,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
       {!section.collapsed && (
         <div className="space-y-3 bg-card p-4">
           {section.entries.map((entry) => (
-            <EntryEditor
+            <SectionEntry
               key={entry.id}
               layout={section.layoutStyle}
               entry={entry}
@@ -103,7 +103,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
             />
           ))}
 
-          {section.layoutStyle !== 'contact-block' && (
+          {section.layoutStyle !== 'contact' && (
             <button
               onClick={onAddEntry}
               className="hover:border-brand/70 hover:text-brand hover:bg-brand/5 flex w-full items-center justify-center gap-2 rounded-md border border-dashed border-border py-2 text-xs font-medium text-muted-foreground transition-all"
