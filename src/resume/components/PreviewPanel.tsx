@@ -1,21 +1,12 @@
 import { useResumeStore } from '@/resume/hooks/useResumeState';
-import { RESUME_TEMPLATES } from '@/resume/templates/registry';
-import React from 'react';
+import { templateStyleRegistry } from '@/templates/registry';
 
-export const PreviewPanel: React.FC = () => {
-  /* 
-    💡 SELEKTOR ATOMIK ZUSTAND:
-    Komponen ini HANYA akan me-render ulang jika objek `state` di dalam store berubah.
-    Jika fungsi aksi lain dipicu di aplikasi, komponen ini tidak akan terganggu.
-  */
+export function PreviewPanel() {
   const state = useResumeStore((store) => store.state);
-
-  // 1. Ambil skema gaya berdasarkan id template aktif
-  const theme = RESUME_TEMPLATES.find((t) => t.id === state.template) || RESUME_TEMPLATES[0];
+  const theme = templateStyleRegistry.get(state.template);
 
   return (
     <div className="flex h-full w-full justify-center overflow-y-auto bg-slate-100 p-4 lg:p-8 print:block print:h-auto print:overflow-visible print:bg-white print:p-0">
-      {/* KERTAS UTAMA (A4) */}
       <article
         className={`min-h-[297mm] w-[210mm] border border-gray-200 bg-white shadow-2xl print:my-0 print:block print:h-auto print:w-full print:overflow-visible print:border-none print:shadow-none ${theme.wrapperClass || ''}`}
       >
@@ -87,4 +78,4 @@ export const PreviewPanel: React.FC = () => {
       </article>
     </div>
   );
-};
+}

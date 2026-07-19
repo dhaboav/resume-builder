@@ -1,8 +1,8 @@
 import { useResumeStore } from '@/resume/hooks/useResumeState';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
+import { templateStyleRegistry } from '@/templates/registry';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
-import { RESUME_TEMPLATES } from '../templates/registry';
 import { AddSectionDialog } from './section/AddSectionDialog';
 import { SectionCard } from './section/SectionCard';
 
@@ -47,7 +47,7 @@ export const FormPanel: React.FC = () => {
             <SelectValue placeholder="Select Template" />
           </SelectTrigger>
           <SelectContent alignItemWithTrigger={false}>
-            {RESUME_TEMPLATES.map((t) => (
+            {templateStyleRegistry.getAll().map((t) => (
               <SelectItem key={t.id} value={t.id}>
                 {t.name}
               </SelectItem>
