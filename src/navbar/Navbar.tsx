@@ -1,18 +1,18 @@
 import { Button } from '@/shared/ui';
 import { Download, FileBraces, Hexagon, Upload } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useNavbar } from './useNavbar';
 
 export function Navbar() {
   const { fileInputRef, handleFileImport, actions } = useNavbar();
 
   return (
-    <nav className="flex h-16 w-full items-center justify-between border-b bg-white px-6 print:hidden">
-      <div className="flex items-center gap-2">
+    <header className="flex justify-between border-b px-6">
+      <Link to="/" className="flex items-center gap-2">
         <Hexagon className="h-5 w-5 fill-black" />
-        <span className="font-semibold tracking-tight">Resume Builder</span>
-      </div>
-
-      <div className="flex items-center gap-1.5">
+        <h1 className="font-semibold tracking-tight">Resume Builder</h1>
+      </Link>
+      <nav className="flex h-10 items-center lg:h-14 lg:gap-1">
         <input
           type="file"
           ref={fileInputRef}
@@ -33,20 +33,19 @@ export function Navbar() {
           onClick={actions.downloadPdf}
           variant="default"
         />
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }
 
-// 🚀 Helper kecil untuk tombol agar kodenya tidak berulang (DRY)
 const NavButton = ({ icon: Icon, label, onClick, variant = 'ghost' }: any) => (
   <Button
     variant={variant}
     size="icon"
     onClick={onClick}
-    className="flex h-9 w-9 items-center gap-2 md:h-10 md:w-auto md:px-4"
+    className="flex h-8 w-8 items-center gap-2 md:h-10 md:w-auto md:px-4"
   >
-    <Icon className="h-4 w-4" />
+    <Icon className="h-4 w-2" />
     <span className="hidden text-sm font-medium md:inline-block">{label}</span>
   </Button>
 );

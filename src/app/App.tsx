@@ -1,12 +1,18 @@
-import { Navbar } from '@/navbar/Navbar';
+import { NotFound } from '@/navbar/NotFound';
 import { WorkspaceView } from '@/resume/WorkspaceView';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout';
 
 function App() {
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden">
-      <Navbar />
-      <WorkspaceView />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<WorkspaceView />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
